@@ -47,7 +47,7 @@ router.post("/user/signup", async (req, res) => {
 
 router.post("/user/login", async (req, res) => {
   try {
-    // console.log(req.body)
+    // console.log(req.body);
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     if (user) {
@@ -58,6 +58,7 @@ router.post("/user/login", async (req, res) => {
           token: user.token,
           email: user.email,
           account: user.account,
+          username: user.account.username,
         });
       } else {
         res.status(401).json({ error: "Unauthorized" });

@@ -1,18 +1,27 @@
-const isAuthenticated = async (req, res, next) => {
-  if (req.headers.authorization) {
-    const user = await User.findOne({
-      token: req.headers.authorization.replace("Bearer ", ""),
-    });
+const User = require("../models/User");
 
-    if (!user) {
-      return res.status(401).json({ error: "Unauthorized" });
+const isAuthenticated = async (req, res, next) => {
+  try {
+    console.log("on rentre ds le middleware");
+    // console.log(req.headers.authorization.replace("Bearer ", ""));
+
+    if (req.headers.authorization) {
+      const receivedToken = req.headers.authorization.replace("Bearer ", "");
+      const owner = await User.findOne({ token: receivedToken }).select(
+        "account _id"
+      );
+      //console.log(owner);
+      if (owner) {
+        req.user = owner;
+        return next();
+      } else {
+        res.status(400).json({ message: "Unauthorized2" });
+      }
     } else {
-      req.user = user;
-      // On crée une clé "user" dans req. La route dans laquelle le middleware est appelé  pourra avoir accès à req.user
-      return next();
+      return res.status(400).json({ error: "Unauthorized" });
     }
-  } else {
-    return res.status(401).json({ error: "Unauthorized" });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
   }
 };
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+// const isAuthenticated = require("../middleware/isAuthenticated");
 const Message = require("../models/Message");
 
 //Créer un nouveau message dans le chat

@@ -1,3 +1,4 @@
+// const isAuthenticated = require("../middleware/isAuthenticated");
 const express = require("express");
 const router = express.Router();
 

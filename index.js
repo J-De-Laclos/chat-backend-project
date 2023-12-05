@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+require("dotenv").config();
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb://localhost/chat-project-back");
+mongoose.connect(process.env.MONGODB_URI);
 
 const userRoutes = require("./routes/user");
 app.use(userRoutes);
@@ -21,6 +21,6 @@ app.all("*", (req, res) => {
   res.status(404).json({ error: "Cette route n'existe pas !!!" });
 });
 
-app.listen(3000, () => {
+app.listen(3000 || process.env.PORT, () => {
   console.log("Server Chatoyant Activated");
 });

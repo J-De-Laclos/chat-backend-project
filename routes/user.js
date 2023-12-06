@@ -6,7 +6,7 @@ const uid2 = require("uid2");
 
 const User = require("../models/User");
 
-router.post("/signup", async (req, res) => {
+router.post("/user/signup", async (req, res) => {
   try {
     // console.log(req.body);
     const { username, email, password } = req.body;
@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/user/login", async (req, res) => {
   try {
     // console.log(req.body);
     const { email, password } = req.body;
